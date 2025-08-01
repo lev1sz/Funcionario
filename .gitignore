@@ -1,0 +1,9 @@
+# build files
+**[Bb]in/
+**[Oo]bj/
+
+# visual studio files
+**.vs/
+
+# environment files
+**.env
