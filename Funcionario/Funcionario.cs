@@ -75,6 +75,9 @@ namespace Funcionario
         {
             try
             {
+                string update = $"UPDATE funcionarios SET email = '{Email}', endereco = '{Endereco}' WHERE id = '{Id}'";
+                ExecuteQuery(update);
+
                 return true;
             }
             catch (Exception ex)

@@ -80,6 +80,7 @@ namespace Funcionario
                         txtNome.Text = reader["nome"].ToString();
                         txtEmail.Text = reader["email"].ToString();
                         txtEndereco.Text = reader["endereco"].ToString();
+                        lblId.Text = reader["Id"].ToString();
                         MessageBox.Show($"Funcionário encontrado: {txtNome.Text}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -95,6 +96,44 @@ namespace Funcionario
             catch (Exception ex)
             {
                 MessageBox.Show($"Erro ao pesquisar funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAtualizar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtNome.Text) && !string.IsNullOrEmpty(txtEmail.Text)
+                && !string.IsNullOrEmpty(txtCpf.Text) && !string.IsNullOrEmpty(txtEndereco.Text))
+                {
+                    Funcionario atualiza = new Funcionario();
+                    atualiza.Nome = txtNome.Text;
+                    atualiza.Cpf = txtCpf.Text;
+                    atualiza.Email = txtEmail.Text;
+                    atualiza.Endereco = txtEndereco.Text;
+                    atualiza.Id = int.Parse(lblId.Text);
+                    if (atualiza.AtualizarFuncionario())
+                    {
+                        MessageBox.Show($"Funcionário \"{atualiza.Nome}\" atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtNome.Clear();
+                        txtEmail.Clear();
+                        txtCpf.Clear();
+                        txtEndereco.Clear();
+                        lblId.Text = string.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível atualizar o funcionário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, localizar o funcionário que deseja atualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao atualizar funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
