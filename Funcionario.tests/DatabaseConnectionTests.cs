@@ -1,6 +1,4 @@
-using Xunit;
 using MySql.Data.MySqlClient;
-using System;
 using static Funcionario.DatabaseHelper;
 
 namespace Funcionario.tests
