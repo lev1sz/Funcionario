@@ -1,0 +1,100 @@
+using static Funcionario.DatabaseHelper;
+using MySql.Data.MySqlClient;
+namespace Funcionario
+{
+    class Funcionario
+    {
+        private int _id;
+        private string? _nome;
+        private string? _email;
+        private string? _cpf;
+        private string? _endereco;
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+        public string? Nome
+        {
+            get => _nome;
+            set => _nome = value;
+        }
+        public string? Email
+        {
+            get => _email;
+            set => _email = value;
+        }
+        public string? Cpf
+        {
+            get => _cpf;
+            set => _cpf = value;
+        }
+        public string? Endereco
+        {
+            get => _endereco;
+            set => _endereco = value;
+        }
+        public bool CadastrarFuncionario()
+        {
+            try
+            {
+                string insert = $"INSERT INTO funcionarios (nome, email, cpf, endereco) VALUES ('{Nome}', '{Email}', '{Cpf}', '{Endereco}')";
+                ExecuteQuery(insert);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro:{ex.Message}");
+            }
+            return false;
+        }
+
+        public MySqlDataReader? PesquisarFuncionario()
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection(GetConnectionString());
+                connection.Open();
+
+                string select = $"SELECT Id, nome, email, cpf, endereco FROM funcionarios WHERE cpf = '{Cpf}';";
+                MySqlCommand command = new MySqlCommand(select, connection);    
+                command.CommandText = select;
+
+                MySqlDataReader reader = command.ExecuteReader();
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro:{ex.Message}");
+            }
+            return null;
+        }
+
+        public bool AtualizarFuncionario()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro:{ex.Message}");
+            }
+            return false;
+        }
+        
+        public bool ExcluirFuncionario()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro:{ex.Message}");
+            }
+            return false;
+        }
+    }
+}

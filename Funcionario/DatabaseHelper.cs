@@ -1,4 +1,6 @@
 using DotNetEnv;
+using MySql.Data.MySqlClient;
+
 namespace Funcionario
 {
     public static class DatabaseHelper
@@ -16,6 +18,14 @@ namespace Funcionario
                 throw new InvalidOperationException("Database connection parameters are not set in the environment variables.");
             }
             return $"server={server}; database={dataBase}; user id={user}; password={password};";
+        }
+        public static void ExecuteQuery(string query)
+        {
+            MySqlConnection MySqlConnection = new MySqlConnection(GetConnectionString());
+            MySqlConnection.Open();
+            MySqlCommand sqlCommand = MySqlConnection.CreateCommand();
+            sqlCommand.CommandText = query;
+            sqlCommand.ExecuteNonQuery();
         }
     }
 }

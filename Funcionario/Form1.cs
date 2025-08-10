@@ -1,4 +1,5 @@
 using DotNetEnv;
+using MySql.Data.MySqlClient;
 using static Funcionario.DatabaseHelper;
 
 namespace Funcionario
@@ -32,14 +33,14 @@ namespace Funcionario
             {
                 if (!txtNome.Text.Equals("") && !txtEmail.Text.Equals("") && !txtCpf.Text.Equals("") && !txtEndereco.Text.Equals(""))
                 {
-                    CadastroFuncionario cadastro = new CadastroFuncionario
+                    Funcionario cadastro = new Funcionario
                     {
                         Nome = txtNome.Text,
                         Email = txtEmail.Text,
                         Cpf = txtCpf.Text,
                         Endereco = txtEndereco.Text
                     };
-                    if (cadastro.cadastrarFuncionario())
+                    if (cadastro.CadastrarFuncionario())
                     {
                         MessageBox.Show($"Funcionário {cadastro.Nome} cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNome.Clear();
@@ -61,6 +62,39 @@ namespace Funcionario
             catch (Exception ex)
             {
                 MessageBox.Show($"Erro ao cadastrar funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPesquisar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtCpf.Text))
+                {
+                    Funcionario pesquisa = new Funcionario();
+                    pesquisa.Cpf = txtCpf.Text;
+                    MySqlDataReader? reader = pesquisa.PesquisarFuncionario();
+                    if (reader != null && reader.HasRows)
+                    {
+                        reader.Read();
+                        txtNome.Text = reader["nome"].ToString();
+                        txtEmail.Text = reader["email"].ToString();
+                        txtEndereco.Text = reader["endereco"].ToString();
+                        MessageBox.Show($"Funcionário encontrado: {txtNome.Text}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Funcionário não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, preencher o campo CPF.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao pesquisar funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
