@@ -1,6 +1,8 @@
 using DotNetEnv;
 using MySql.Data.MySqlClient;
-using static Funcionario.DatabaseHelper;
+using Mysqlx.Crud;
+using static Funcionario.Services.DatabaseConnection;
+using static Funcionario.Services.FuncionarioServices;
 
 namespace Funcionario
 {
@@ -40,7 +42,7 @@ namespace Funcionario
                         Cpf = txtCpf.Text,
                         Endereco = txtEndereco.Text
                     };
-                    if (cadastro.CadastrarFuncionario())
+                    if (InsertFuncionario(cadastro))
                     {
                         MessageBox.Show($"Funcionário {cadastro.Nome} cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNome.Clear();
@@ -73,7 +75,7 @@ namespace Funcionario
                 {
                     Funcionario pesquisa = new Funcionario();
                     pesquisa.Cpf = txtCpf.Text;
-                    MySqlDataReader? reader = pesquisa.PesquisarFuncionario();
+                    MySqlDataReader? reader = ReadFuncionarioByCPF(pesquisa.Cpf);
                     if (reader != null && reader.HasRows)
                     {
                         reader.Read();
@@ -112,7 +114,7 @@ namespace Funcionario
                     atualiza.Email = txtEmail.Text;
                     atualiza.Endereco = txtEndereco.Text;
                     atualiza.Id = int.Parse(lblId.Text);
-                    if (atualiza.AtualizarFuncionario())
+                    if (UpdateFuncionario(atualiza))
                     {
                         MessageBox.Show($"Funcionário \"{atualiza.Nome}\" atualizado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNome.Clear();
@@ -150,7 +152,7 @@ namespace Funcionario
                     excluir.Email = txtEmail.Text;
                     excluir.Endereco = txtEndereco.Text;
                     excluir.Id = int.Parse(lblId.Text);
-                    if (excluir.ExcluirFuncionario())
+                    if (DeleteFuncionario(excluir))
                     {
                         MessageBox.Show($"Funcionário \"{excluir.Nome}\" excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNome.Clear();

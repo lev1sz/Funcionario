@@ -1,12 +1,12 @@
 using MySql.Data.MySqlClient;
-using static Funcionario.DatabaseHelper;
+using static Funcionario.Services.DatabaseConnection;
 
-namespace Funcionario.tests
+namespace Funcionario.Tests
 {
     public class DatabaseConnectionTests
     {
-        [Fact]
-        public void ConnectionOpen()
+        [Fact(DisplayName = "Should open connection successfully")]
+        public void ShouldOpenConnectionSuccesfully()
         {
             Exception? connectionException = null;
             string connectionString = GetConnectionString();

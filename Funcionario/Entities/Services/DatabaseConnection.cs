@@ -1,9 +1,9 @@
 using DotNetEnv;
 using MySql.Data.MySqlClient;
 
-namespace Funcionario
+namespace Funcionario.Services
 {
-    public static class DatabaseHelper
+    public static class DatabaseConnection
     {
         public static string GetConnectionString()
         {
