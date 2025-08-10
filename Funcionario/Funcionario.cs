@@ -66,7 +66,7 @@ namespace Funcionario
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro:{ex.Message}");
+                MessageBox.Show($"Erro: {ex.Message}");
             }
             return null;
         }
@@ -82,7 +82,7 @@ namespace Funcionario
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro:{ex.Message}");
+                MessageBox.Show($"Erro: {ex.Message}");
             }
             return false;
         }
@@ -91,11 +91,19 @@ namespace Funcionario
         {
             try
             {
+                DialogResult result = MessageBox.Show($"Tem certeza que deseja excluir o funcionário {Nome}?", "Confirmação",
+                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return false;
+                }
+                string delete = $"DELETE FROM funcionarios WHERE id = '{Id}'";
+                ExecuteQuery(delete);
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro:{ex.Message}");
+                MessageBox.Show($"Erro: {ex.Message}");
             }
             return false;
         }

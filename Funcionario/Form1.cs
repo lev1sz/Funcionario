@@ -136,5 +136,43 @@ namespace Funcionario
                 MessageBox.Show($"Erro ao atualizar funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtNome.Text) && !string.IsNullOrEmpty(txtEmail.Text)
+                && !string.IsNullOrEmpty(txtCpf.Text) && !string.IsNullOrEmpty(txtEndereco.Text))
+                {
+                    Funcionario excluir = new Funcionario();
+                    excluir.Nome = txtNome.Text;
+                    excluir.Cpf = txtCpf.Text;
+                    excluir.Email = txtEmail.Text;
+                    excluir.Endereco = txtEndereco.Text;
+                    excluir.Id = int.Parse(lblId.Text);
+                    if (excluir.ExcluirFuncionario())
+                    {
+                        MessageBox.Show($"Funcionário \"{excluir.Nome}\" excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtNome.Clear();
+                        txtEmail.Clear();
+                        txtCpf.Clear();
+                        txtEndereco.Clear();
+                        lblId.Text = string.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível excluir o funcionário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, localizar o funcionário que deseja excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao excluir funcionário: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

@@ -41,6 +41,7 @@
             btnAtualizar = new Button();
             lblIdTexto = new Label();
             lblId = new Label();
+            btnExcluir = new Button();
             SuspendLayout();
             // 
             // lblNome
@@ -122,7 +123,7 @@
             // btnCadastra
             // 
             btnCadastra.Font = new Font("Leelawadee", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCadastra.Location = new Point(307, 204);
+            btnCadastra.Location = new Point(300, 204);
             btnCadastra.Name = "btnCadastra";
             btnCadastra.Size = new Size(90, 35);
             btnCadastra.TabIndex = 5;
@@ -133,7 +134,7 @@
             // btnPesquisar
             // 
             btnPesquisar.Font = new Font("Leelawadee", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnPesquisar.Location = new Point(211, 204);
+            btnPesquisar.Location = new Point(204, 204);
             btnPesquisar.Name = "btnPesquisar";
             btnPesquisar.Size = new Size(90, 35);
             btnPesquisar.TabIndex = 6;
@@ -144,7 +145,7 @@
             // btnAtualizar
             // 
             btnAtualizar.Font = new Font("Leelawadee", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAtualizar.Location = new Point(115, 204);
+            btnAtualizar.Location = new Point(108, 204);
             btnAtualizar.Name = "btnAtualizar";
             btnAtualizar.Size = new Size(90, 35);
             btnAtualizar.TabIndex = 7;
@@ -171,11 +172,23 @@
             lblId.Size = new Size(0, 21);
             lblId.TabIndex = 9;
             // 
+            // btnExcluir
+            // 
+            btnExcluir.Font = new Font("Leelawadee", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnExcluir.Location = new Point(12, 204);
+            btnExcluir.Name = "btnExcluir";
+            btnExcluir.Size = new Size(90, 35);
+            btnExcluir.TabIndex = 10;
+            btnExcluir.Text = "Excluir";
+            btnExcluir.UseVisualStyleBackColor = true;
+            btnExcluir.Click += btnExcluir_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(409, 248);
+            Controls.Add(btnExcluir);
             Controls.Add(lblId);
             Controls.Add(lblIdTexto);
             Controls.Add(btnAtualizar);
@@ -212,5 +225,6 @@
         private Button btnAtualizar;
         private Label lblIdTexto;
         private Label lblId;
+        private Button btnExcluir;
     }
 }
