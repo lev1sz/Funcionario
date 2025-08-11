@@ -152,7 +152,7 @@ namespace Funcionario
                     excluir.Email = txtEmail.Text;
                     excluir.Endereco = txtEndereco.Text;
                     excluir.Id = int.Parse(lblId.Text);
-                    if (DeleteFuncionario(excluir))
+                    if (DeleteFuncionarioByCPF(excluir.Cpf))
                     {
                         MessageBox.Show($"Funcionário \"{excluir.Nome}\" excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtNome.Clear();

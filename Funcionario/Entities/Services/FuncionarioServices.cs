@@ -1,5 +1,6 @@
 using static Funcionario.Services.DatabaseConnection;
 using MySql.Data.MySqlClient;
+using System.IO.Pipelines;
 
 namespace Funcionario.Services
 {
@@ -54,20 +55,30 @@ namespace Funcionario.Services
             }
             return false;
         }
-        public static bool DeleteFuncionario(Funcionario funcionario)
+        public static bool DeleteFuncionarioByCPF(string CPF)
         {
+            
             try
             {
-                DialogResult result = MessageBox.Show($"Tem certeza que deseja excluir o funcionário {funcionario.Nome}?", "Confirmação", 
-                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.No)
+                MySqlDataReader? result = ReadFuncionarioByCPF(CPF);
+                if (result != null)
                 {
-                    return false;
+                    result.Read();
+                    if (CPF == result["cpf"].ToString())
+                    {
+                        DialogResult dialogResult = MessageBox.Show($"Tem certeza que deseja excluir o funcionário {result["nome"].ToString()}?", "Confirmação",
+                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (dialogResult == DialogResult.No)
+                        {
+                            return false;
+                        }
+                        string delete = $"DELETE FROM funcionarios WHERE id = '{result["id"]}'";
+                        string resetIdSequence = $"SET @num := 0; UPDATE Funcionarios SET id = @num := (@num+1); ALTER TABLE Funcionarios AUTO_INCREMENT = 1;";
+                        ExecuteQuery(delete);
+                        return true;
+                    }
                 }
-                string delete = $"DELETE FROM funcionarios WHERE id = '{funcionario.Id}'";
-                string resetIdSequence = $"SET @num := 0; UPDATE Funcionarios SET id = @num := (@num+1); ALTER TABLE Funcionarios AUTO_INCREMENT = 1;";
-                ExecuteQuery(delete);
-                return true;
+                
             }
             catch (Exception ex)
             {
